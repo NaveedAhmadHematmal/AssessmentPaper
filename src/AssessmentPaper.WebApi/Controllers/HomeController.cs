@@ -7,8 +7,19 @@ namespace AssessmentPaper.WebApi.Controllers;
 public class HomeController : ControllerBase
 {
     private readonly ILogger<HomeController> _logger;
+
     public HomeController(ILogger<HomeController> logger)
     {
         _logger = logger;
+        
+    }
+
+    [Route("[Action]/{Category}")]
+    [HttpPost]
+    public IActionResult AddQuestionToACategory([FromServices] AddQuestionApiModel addQuestion, [FromBody] QuestionModel questionModel, [FromRoute] string Category){
+        if(ModelState.IsValid){
+            return Ok(addQuestion.AddQuestion(questionModel, Category));
+        }
+        return BadRequest();
     }
 }
