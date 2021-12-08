@@ -4,6 +4,8 @@ using AssessmentPaper.WebApi.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Adds Custom filters
+builder.Services.AddMvc(options => options.Filters.Add(new HandleExceptionAttribute()));
 // Add services to the container.
 
 builder.Services.AddControllers();
