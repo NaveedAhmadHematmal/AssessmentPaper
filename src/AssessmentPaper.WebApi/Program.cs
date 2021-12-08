@@ -1,5 +1,6 @@
 using AssessmentPaper.WebApi;
 using AssessmentPaper.WebApi.DISettings;
+using AssessmentPaper.WebApi.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 

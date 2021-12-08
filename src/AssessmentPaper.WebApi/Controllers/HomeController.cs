@@ -1,4 +1,7 @@
+using AssessmentPaper.WebApi.ApiModels;
+using AssessmentPaper.WebApi.Filters;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace AssessmentPaper.WebApi.Controllers;
 
@@ -16,10 +19,9 @@ public class HomeController : ControllerBase
 
     [Route("[Action]/{Category}")]
     [HttpPost]
+//// TODO1: The below Action checks the body for validation without this attribute, and I can't figure out why?
+    [ValidateModel]
     public IActionResult AddQuestionToACategory([FromServices] AddQuestionApiModel addQuestion, [FromBody] QuestionModel questionModel, [FromRoute] string Category){
-        if(ModelState.IsValid){
-            return Ok(addQuestion.AddQuestion(questionModel, Category));
-        }
-        return BadRequest();
+        return Ok(addQuestion.AddQuestion(questionModel, Category));
     }
 }
