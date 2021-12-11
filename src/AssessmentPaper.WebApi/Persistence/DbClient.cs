@@ -1,9 +1,9 @@
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
-namespace AssessmentPaper.WebApi.AppModel;
+namespace AssessmentPaper.WebApi.Persistence;
 
-public class DbClient<T>
+public class DbClient
 {
     private readonly IOptions<ServicesSettings> options;
     public DbClient(IOptions<ServicesSettings> options)
@@ -11,12 +11,11 @@ public class DbClient<T>
         this.options = options;
     }
 
-    public IMongoCollection<T> Client(string collectionName){
+    public IMongoDatabase Client(){
         var client = new MongoClient(options.Value.MongodbConnectionString);
 
         var database = client.GetDatabase(options.Value.MonogoDatabase);
-        var collection = database.GetCollection<T>(collectionName);
 
-        return collection;
+        return database;
     }
 }
