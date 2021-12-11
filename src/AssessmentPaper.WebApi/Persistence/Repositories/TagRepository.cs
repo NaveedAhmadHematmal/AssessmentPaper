@@ -45,4 +45,13 @@ public class TagRepository : Repository<TagRepository>, ITagRepository<TagReposi
     {
         throw new NotImplementedException();
     }
+
+    public IEnumerable<TagModel> GetTags()
+    {
+        return DbClient
+        .Client()
+        .GetCollection<TagModel>("Tags")
+        .Find(new BsonDocument())
+        .ToList();
+    }
 }

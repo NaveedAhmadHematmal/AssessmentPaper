@@ -22,4 +22,10 @@ public class TagController : ControllerBase
     public IActionResult AddTag([FromBody] TagModel tag){
         return Ok(unitOfWork.Tags.AddTag(tag));
     }
+
+    [Route("[Action]")]
+    [HttpGet]
+    public IActionResult GetTags(){
+        return Ok(unitOfWork.Tags.GetTags());
+    }
 }

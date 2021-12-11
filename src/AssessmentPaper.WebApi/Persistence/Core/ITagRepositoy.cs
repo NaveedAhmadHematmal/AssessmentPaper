@@ -8,4 +8,5 @@ public interface ITagRepository<TEntity> : IRepository<TEntity>  where TEntity :
     public TagModel RemoveTag(int tagId);
     public IEnumerable<TagModel> RemoveTagRange(IEnumerable<int> tagsIds);
     public bool IsTagAvailable(TagModel tag);
+    public IEnumerable<TagModel> GetTags();
 } 
