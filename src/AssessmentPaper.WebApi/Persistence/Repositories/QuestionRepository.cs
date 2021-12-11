@@ -17,6 +17,7 @@ public class QuestionRepository : Repository<QuestionRepository>, IQuestionRespo
     public QuestionModel AddQuestionToACategory(string category, QuestionModel question)
     {
         var db = DbClient.Client().GetCollection<object>(category);
+        question._id = ObjectId.GenerateNewId();
         db.InsertOne(question);
         return question;
     }
@@ -29,5 +30,14 @@ public class QuestionRepository : Repository<QuestionRepository>, IQuestionRespo
         .Find(new BsonDocument())
         .ToList()
         .Take(numberOfQuestions);
+    }
+
+    public IEnumerable<QuestionModel> GetNQuestionsFromXCategoryOfSpecificTags(string Category, int numberOfQuestions, string[] tags)
+    {
+        var q = DbClient.Client().GetCollection<QuestionModel>(Category).Find(new BsonDocument()).ToList();
+        return 
+            from r in q
+            where r.Tags.Any(a => a.Contains(tags[0]))
+            select r;
     }
 }
