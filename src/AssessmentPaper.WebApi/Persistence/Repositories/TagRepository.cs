@@ -5,10 +5,10 @@ using MongoDB.Driver;
 
 namespace AssessmentPaper.WebApi.Persistence.Repositories;
 
-public class TagRepository : Repository<TagRepository>, ITagRepository<TagRepository>
+public class TagRepository : ITagRepository<TagModel>
 {
     public DbClient DbClient { get; }
-    public TagRepository(DbClient dbClient) : base(dbClient)
+    public TagRepository(DbClient dbClient)
     {
         DbClient = dbClient;
     }
@@ -16,7 +16,7 @@ public class TagRepository : Repository<TagRepository>, ITagRepository<TagReposi
     public TagModel AddTag(TagModel tag)
     {
         var db = DbClient.Client().GetCollection<TagModel>("Tags");
-        if(!IsTagAvailable(tag)){
+        if(!IsTagAvailable(tag.Tag)){
             db.InsertOne(tag);
             return tag;
         }else{
@@ -24,10 +24,10 @@ public class TagRepository : Repository<TagRepository>, ITagRepository<TagReposi
         }
     }
 
-    public bool IsTagAvailable(TagModel tag){
+    public bool IsTagAvailable(string tag){
         var db = DbClient.Client().GetCollection<TagModel>("Tags").Find(new BsonDocument()).ToList();
         
-        var s = db.Where(x => x.Tag.Contains(tag.Tag)).Count();
+        var s = db.Where(x => x.Tag.Contains(tag)).Count();
 
         return s > 0 ? true : false;
     }

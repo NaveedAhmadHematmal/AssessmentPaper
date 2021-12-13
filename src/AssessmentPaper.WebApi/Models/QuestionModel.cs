@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using MongoDB.Bson;
 
-namespace AssessmentPaper.WebApi;
+namespace AssessmentPaper.WebApi.Models;
 
 public class QuestionModel{
     public ObjectId _id { get; set; }

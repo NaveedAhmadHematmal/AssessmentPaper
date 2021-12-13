@@ -1,4 +1,5 @@
 using AssessmentPaper.WebApi.Filters;
+using AssessmentPaper.WebApi.Models;
 using AssessmentPaper.WebApi.Persistence.Repositories;
 using AssessmentPaper.WebApi.Utilities;
 using Microsoft.AspNetCore.Mvc;
@@ -23,18 +24,25 @@ public class HomeController : ControllerBase
     [HttpPost]
     [ValidateModel]
     public IActionResult AddQuestionToACategory([FromBody] QuestionModel questionModel, [FromRoute] string Category){
-        return Ok(unitOfWork.Questions.AddQuestionToACategory(Category, questionModel));
+        try
+        {
+            return Ok(unitOfWork.AddQuestionToACategory(Category, questionModel));
+        }
+        catch (System.Exception ex)
+        {
+            return NotFound($"{ex.Message} tags are not available");
+        }
     }
 
     [Route("[Action]/{Category}")]
     [HttpGet]
     public IActionResult GetNQuestionsFromACategory(string Category, int numberOfQuestions){
-        return Ok(unitOfWork.Questions.GetNQuestionsFromXCategory(Category, numberOfQuestions));
+        return Ok(unitOfWork.GetNQuestionsFromXCategory(Category, numberOfQuestions));
     }
 
     [Route("[Action]/{Category}/{numberOfQuestions}/{tags}")]
     [HttpGet]
     public IActionResult GetNQuestionsFromXCategoryOfSpecificTags(string Category, int numberOfQuestions, string tags){
-        return Ok(unitOfWork.Questions.GetNQuestionsFromXCategoryOfSpecificTags(Category, numberOfQuestions, tags.SplitCommanSeperatedStringIntoObjectArray()));
+        return Ok(unitOfWork.GetNQuestionsFromXCategoryOfSpecificTags(Category, numberOfQuestions, tags.SplitCommanSeperatedStringIntoObjectArray()));
     }
 }

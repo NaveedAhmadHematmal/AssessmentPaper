@@ -20,12 +20,12 @@ public class TagController : ControllerBase
     [Route("[Action]")]
     [HttpPost]
     public IActionResult AddTag([FromBody] TagModel tag){
-        return Ok(unitOfWork.Tags.AddTag(tag));
+        return Ok(unitOfWork.AddTag(tag));
     }
 
     [Route("[Action]")]
     [HttpGet]
     public IActionResult GetTags(){
-        return Ok(unitOfWork.Tags.GetTags());
+        return Ok(unitOfWork.GetTags());
     }
 }

@@ -1,3 +1,4 @@
+using AssessmentPaper.WebApi.Models;
 using AssessmentPaper.WebApi.Persistence.Core;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -5,9 +6,9 @@ using Newtonsoft.Json;
 
 namespace AssessmentPaper.WebApi.Persistence.Repositories;
 
-public class QuestionRepository : Repository<QuestionRepository>, IQuestionRespository<QuestionRepository>
+public class QuestionRepository :  IQuestionRepository<QuestionModel>
 {
-    public QuestionRepository(DbClient dbClient) : base(dbClient)
+    public QuestionRepository(DbClient dbClient)
     {
         DbClient = dbClient;
     }
