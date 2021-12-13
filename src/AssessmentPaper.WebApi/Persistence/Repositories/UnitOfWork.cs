@@ -30,6 +30,9 @@ public class UnitOfWork : IUnitOfWork
     public QuestionModel AddQuestionToACategory(string category, QuestionModel question){
         List<string> notAvailableTags = new();
         bool allTagsAvailable = true;
+        if(!Categories.IsCategoryAvailable(category)){
+            throw new Exception($"{category} not available");
+        }
         foreach (var item in question.Tags)
         {
             if(!Tags.IsTagAvailable(item)){
@@ -40,6 +43,7 @@ public class UnitOfWork : IUnitOfWork
         if(allTagsAvailable){
             return Questions.AddQuestionToACategory(category, question);
         }
+        
         throw new Exception(String.Join(", ", notAvailableTags.ToArray()));
     }
 
