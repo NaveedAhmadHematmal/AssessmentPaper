@@ -9,11 +9,13 @@ public class UnitOfWork : IUnitOfWork
     private readonly DbClient _context;
     private IQuestionRepository<QuestionModel> Questions { get; set; }
     private ITagRepository<TagModel> Tags {get; set;}
+    private ICategoryRepository<CategoryModel> Categories {get;set;}
     public UnitOfWork([FromServices] DbClient context)
     {
         _context = context;
         Questions = new QuestionRepository(_context);
         Tags = new TagRepository(_context);
+        Categories = new CategoryRepository(_context);
     }
     public int Complete()
     {
@@ -58,5 +60,10 @@ public class UnitOfWork : IUnitOfWork
     public IEnumerable<TagModel> GetTags()
     {
         return Tags.GetTags();
+    }
+
+    public CategoryModel AddCategory(CategoryModel category)
+    {
+        return Categories.AddCategory(category);
     }
 }
