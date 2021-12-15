@@ -1,5 +1,6 @@
 using AssessmentPaper.WebApi.Models;
 using AssessmentPaper.WebApi.Persistence.Core;
+using AssessmentPaper.WebApi.Utilities;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -53,5 +54,24 @@ public class TagRepository : ITagRepository<TagModel>
         .GetCollection<TagModel>("Tags")
         .Find(new BsonDocument())
         .ToList();
+    }
+
+    public IEnumerable<string> GetTagsSuggestions(string question){
+        // Who was the first president of Afghanistan?
+
+        question = question.RemoveExceptLetters();
+        string[] words = question.SplitSpaceSeperatedStringIntoObjectArray();
+
+        List<string> availableTagsInstring = new();
+
+        foreach (var item in words)
+        {
+            if(IsTagAvailable(item)){
+                availableTagsInstring.Add(item);
+            }
+        }
+
+        // Remove duplicate tags
+        return availableTagsInstring.Distinct().ToList();
     }
 }

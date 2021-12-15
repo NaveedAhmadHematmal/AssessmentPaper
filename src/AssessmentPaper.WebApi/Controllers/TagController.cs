@@ -28,4 +28,10 @@ public class TagController : ControllerBase
     public IActionResult GetTags(){
         return Ok(unitOfWork.GetTags());
     }
+
+    [Route("[Action]")]
+    [HttpPost]
+    public IActionResult GetTagsSuggestiosn([FromBody] string question){
+        return Ok(unitOfWork.GetTagsSuggestions(question));
+    }
 }

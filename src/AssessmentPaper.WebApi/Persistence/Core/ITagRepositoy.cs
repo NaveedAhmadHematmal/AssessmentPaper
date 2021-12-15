@@ -9,4 +9,5 @@ public interface ITagRepository<TEntity>  where TEntity : class{
     public IEnumerable<TEntity> RemoveTagRange(IEnumerable<int> tagsIds);
     public bool IsTagAvailable(string tag);
     public IEnumerable<TEntity> GetTags();
+    public IEnumerable<string> GetTagsSuggestions(string question);
 } 

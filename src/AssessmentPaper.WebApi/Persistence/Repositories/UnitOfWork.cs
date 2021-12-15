@@ -70,4 +70,8 @@ public class UnitOfWork : IUnitOfWork
     {
         return Categories.AddCategory(category);
     }
+
+    public IEnumerable<string> GetTagsSuggestions(string question){
+        return Tags.GetTagsSuggestions(question);
+    }
 }
