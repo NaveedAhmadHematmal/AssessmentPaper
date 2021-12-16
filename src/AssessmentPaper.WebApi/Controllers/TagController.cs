@@ -8,10 +8,10 @@ namespace AssessmentPaper.WebApi.Controllers;
 [Route("[controller]")]
 public class TagController : ControllerBase
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ILogger<TagController> _logger;
     private readonly UnitOfWork unitOfWork;
 
-    public TagController(ILogger<HomeController> logger, UnitOfWork unitOfWork)
+    public TagController(ILogger<TagController> logger, UnitOfWork unitOfWork)
     {
         _logger = logger;
         this.unitOfWork = unitOfWork;

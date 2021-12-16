@@ -9,12 +9,12 @@ namespace AssessmentPaper.WebApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class HomeController : ControllerBase
+public class QuestionController : ControllerBase
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ILogger<QuestionController> _logger;
     private readonly UnitOfWork unitOfWork;
 
-    public HomeController(ILogger<HomeController> logger, UnitOfWork unitOfWork)
+    public QuestionController(ILogger<QuestionController> logger, UnitOfWork unitOfWork)
     {
         _logger = logger;
         this.unitOfWork = unitOfWork;
