@@ -1,6 +1,10 @@
 using AssessmentPaper.WebApi;
+using AssessmentPaper.WebApi.Areas.Data;
 using AssessmentPaper.WebApi.DISettings;
 using AssessmentPaper.WebApi.Filters;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +22,16 @@ builder.Services.AddClients();
 builder.Services.Configure<ServicesSettings>(
     builder.Configuration.GetSection(nameof(ServicesSettings)));
 
+// Adds sql server for identity
+builder.Services.AddDbContext<IdentityDatabaseContext>(options =>
+ options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityDbConnectionString")));
+ 
+// adds Identity to WebApi
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => 
+    options.Password.RequiredLength = 10)
+    .AddEntityFrameworkStores<IdentityDatabaseContext>()
+    .AddDefaultTokenProviders();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -28,6 +42,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
