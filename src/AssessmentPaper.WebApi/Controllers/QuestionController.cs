@@ -2,11 +2,13 @@ using AssessmentPaper.WebApi.Filters;
 using AssessmentPaper.WebApi.Models;
 using AssessmentPaper.WebApi.Persistence.Repositories;
 using AssessmentPaper.WebApi.Utilities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace AssessmentPaper.WebApi.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class QuestionController : ControllerBase

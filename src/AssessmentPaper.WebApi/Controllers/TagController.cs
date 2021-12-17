@@ -1,11 +1,13 @@
 using AssessmentPaper.WebApi.Models;
 using AssessmentPaper.WebApi.Persistence.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AssessmentPaper.WebApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize]
 public class TagController : ControllerBase
 {
     private readonly ILogger<TagController> _logger;

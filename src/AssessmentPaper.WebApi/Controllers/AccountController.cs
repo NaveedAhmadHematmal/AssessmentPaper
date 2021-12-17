@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using AssessmentPaper.WebApi.Areas.Models;
 using AssessmentPaper.WebApi.Filters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +23,7 @@ public class AccountController : ControllerBase
     [Route("[Action]")]
     [HttpPost]
     [ValidateModel]
+    [Authorize]
     public async Task<IActionResult> Register([FromBody] RegisterModel registerModel, string returnUrl = null){
         var user = new IdentityUser(registerModel.Email);
 
