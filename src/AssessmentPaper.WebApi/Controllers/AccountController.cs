@@ -37,4 +37,26 @@ public class AccountController : ControllerBase
         }
         return NotFound();
     }
+
+    [Route("[Action]")]
+    [HttpPost]
+    [ValidateModel]
+    public async Task<IActionResult> Login([FromBody] LoginModel login){
+        var result = await signInManager.PasswordSignInAsync(
+            login.Email, login.Password, login.RememberMe, true
+        );
+
+        if(!result.Succeeded){
+            return NotFound();
+        }
+        return Ok();
+    }
+
+    [Route("[Action]")]
+    [HttpGet]
+    [ValidateModel]
+    public async Task<IActionResult> Logout(){
+        await signInManager.SignOutAsync();
+        return Ok();
+    }
 }
