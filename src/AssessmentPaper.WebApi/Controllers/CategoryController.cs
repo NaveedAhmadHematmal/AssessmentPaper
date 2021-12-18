@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AssessmentPaper.WebApi.Controllers;
 
+[ApiController]
+[Route("[controller]")]
 public class CategoryController : ControllerBase
 {
     private readonly ILogger<CategoryController> _logger;
@@ -21,7 +23,7 @@ public class CategoryController : ControllerBase
     [HttpPost]
     [ValidateModel]
     [Authorize("CanWrite")]
-    public IActionResult AddQuestionToACategory([FromBody] CategoryModel categoryModel){
+    public IActionResult AddCategory([FromBody] CategoryModel categoryModel){
         try
         {
             return Ok(unitOfWork.AddCategory(categoryModel));

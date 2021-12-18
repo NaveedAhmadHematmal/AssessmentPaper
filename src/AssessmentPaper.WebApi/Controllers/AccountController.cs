@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AssessmentPaper.WebApi.Controllers;
 
+[ApiController]
+[Route("[controller]")]
 public class AccountController : ControllerBase
 {
     private readonly ILogger<AccountController> _logger;
@@ -23,7 +25,7 @@ public class AccountController : ControllerBase
     [Route("[Action]")]
     [HttpPost]
     [Authorize("CanControl")]
-    public async Task<IActionResult> Register([FromBody] RegisterModel registerModel, string returnUrl = null){
+    public async Task<IActionResult> RegisterUser([FromBody] RegisterModel registerModel, string returnUrl = null){
         var user = new IdentityUser(registerModel.Email);
 
         var result = await userManager.CreateAsync(user, registerModel.Password);
