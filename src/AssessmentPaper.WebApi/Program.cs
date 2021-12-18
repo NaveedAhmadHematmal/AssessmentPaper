@@ -1,7 +1,12 @@
 using AssessmentPaper.WebApi;
 using AssessmentPaper.WebApi.Areas.Data;
+using AssessmentPaper.WebApi.Areas.Policies;
+using AssessmentPaper.WebApi.Areas.Policies.Admin;
+using AssessmentPaper.WebApi.Areas.Policies.Read;
+using AssessmentPaper.WebApi.Areas.Policies.Write;
 using AssessmentPaper.WebApi.DISettings;
 using AssessmentPaper.WebApi.Filters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -28,9 +33,42 @@ builder.Services.AddDbContext<IdentityDatabaseContext>(options =>
  
 // adds Identity to WebApi
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => 
-    options.Password.RequiredLength = 10)
+    options.Password.RequiredLength = 8)
     .AddEntityFrameworkStores<IdentityDatabaseContext>()
     .AddDefaultTokenProviders();
+
+// Authorization Policies
+builder.Services.AddAuthorization(options =>{
+    options.AddPolicy(
+        "CanWrite",
+        policyBuilder => 
+        policyBuilder.AddRequirements(
+            new WriteRequirement()
+        )
+    );
+    options.AddPolicy(
+        "CanRead",
+        policyBuilder =>
+        policyBuilder.AddRequirements(
+            new ReadRequirement()
+        )
+    );
+    options.AddPolicy(
+        "CanControl",
+        policyBuilder =>
+        policyBuilder.AddRequirements(
+            new AdminRequirement()
+        )
+    );
+});
+
+// Authorization Handlers
+builder.Services.AddSingleton<IAuthorizationHandler, AdminHandler>();
+builder.Services.AddSingleton<IAuthorizationHandler, WriteHandler>();
+builder.Services.AddSingleton<IAuthorizationHandler, ReadHandler>();
+builder.Services.AddSingleton<IAuthorizationHandler, AdminToWriteHandler>();
+builder.Services.AddSingleton<IAuthorizationHandler, AdminToReadHandler>();
+builder.Services.AddSingleton<IAuthorizationHandler, WriteToReadHandler>();
 
 var app = builder.Build();
 

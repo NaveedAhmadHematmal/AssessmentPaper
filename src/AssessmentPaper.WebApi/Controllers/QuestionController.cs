@@ -8,7 +8,6 @@ using Newtonsoft.Json;
 
 namespace AssessmentPaper.WebApi.Controllers;
 
-[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class QuestionController : ControllerBase
@@ -25,6 +24,7 @@ public class QuestionController : ControllerBase
     [Route("[Action]/{Category}")]
     [HttpPost]
     [ValidateModel]
+    [Authorize("CanWrite")]
     public IActionResult AddQuestionToACategory([FromBody] QuestionModel questionModel, [FromRoute] string Category){
         try
         {
@@ -38,12 +38,14 @@ public class QuestionController : ControllerBase
 
     [Route("[Action]/{Category}")]
     [HttpGet]
+    [Authorize("CanRead")]
     public IActionResult GetNQuestionsFromACategory(string Category, int numberOfQuestions){
         return Ok(unitOfWork.GetNQuestionsFromXCategory(Category, numberOfQuestions));
     }
 
     [Route("[Action]/{Category}/{numberOfQuestions}/{tags}")]
     [HttpGet]
+    [Authorize("CanRead")]
     public IActionResult GetNQuestionsFromXCategoryOfSpecificTags(string Category, int numberOfQuestions, string tags){
         return Ok(unitOfWork.GetNQuestionsFromXCategoryOfSpecificTags(Category, numberOfQuestions, tags.SplitCommanSeperatedStringIntoObjectArray()));
     }

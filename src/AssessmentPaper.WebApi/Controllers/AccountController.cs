@@ -22,15 +22,14 @@ public class AccountController : ControllerBase
 
     [Route("[Action]")]
     [HttpPost]
-    [ValidateModel]
-    [Authorize]
+    [Authorize("CanControl")]
     public async Task<IActionResult> Register([FromBody] RegisterModel registerModel, string returnUrl = null){
         var user = new IdentityUser(registerModel.Email);
 
         var result = await userManager.CreateAsync(user, registerModel.Password);
 
         if(result.Succeeded){
-            var claim = new Claim("FullName", registerModel.FullName);
+            var claim = new Claim("Permission", registerModel.Permission);
             await userManager.AddClaimAsync(user, claim);
 
             await signInManager.SignInAsync(user, true);

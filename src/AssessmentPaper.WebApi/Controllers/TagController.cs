@@ -7,7 +7,6 @@ namespace AssessmentPaper.WebApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize]
 public class TagController : ControllerBase
 {
     private readonly ILogger<TagController> _logger;
@@ -21,18 +20,21 @@ public class TagController : ControllerBase
 
     [Route("[Action]")]
     [HttpPost]
+    [Authorize("CanWrite")]
     public IActionResult AddTag([FromBody] TagModel tag){
         return Ok(unitOfWork.AddTag(tag));
     }
 
     [Route("[Action]")]
     [HttpGet]
+    [Authorize("CanRead")]
     public IActionResult GetTags(){
         return Ok(unitOfWork.GetTags());
     }
 
     [Route("[Action]")]
     [HttpPost]
+    [Authorize("CanRead")]
     public IActionResult GetTagsSuggestiosn([FromBody] string question){
         return Ok(unitOfWork.GetTagsSuggestions(question));
     }
