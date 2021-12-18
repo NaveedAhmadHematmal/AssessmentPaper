@@ -10,12 +10,12 @@ public class UnitOfWork : IUnitOfWork
     private IQuestionRepository<QuestionModel> Questions { get; set; }
     private ITagRepository<TagModel> Tags {get; set;}
     private ICategoryRepository<CategoryModel> Categories {get;set;}
-    public UnitOfWork([FromServices] DbClient context)
+    public UnitOfWork([FromServices] DbClient context, QuestionRepository question, TagRepository tags, CategoryRepository category)
     {
         _context = context;
-        Questions = new QuestionRepository(_context);
-        Tags = new TagRepository(_context);
-        Categories = new CategoryRepository(_context);
+        Questions = question;
+        Tags = tags;
+        Categories = category;
     }
     public int Complete()
     {
