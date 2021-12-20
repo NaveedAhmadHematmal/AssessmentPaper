@@ -19,6 +19,10 @@
     <PackageReference Include="MongoDB.Driver" Version="2.14.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="serilog.aspnetcore" Version="4.1.0" />
+    <PackageReference Include="serilog.sinks.console" Version="4.0.1" />
+    <PackageReference Include="serilog.sinks.file" Version="5.0.0" />
+    <PackageReference Include="serilog.sinks.seq" Version="5.1.0" />
   </ItemGroup>
 
 </Project>

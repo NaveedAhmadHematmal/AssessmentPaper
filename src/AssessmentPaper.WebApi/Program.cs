@@ -3,6 +3,7 @@ using AssessmentPaper.WebApi.Areas.Data;
 using AssessmentPaper.WebApi.DISettings;
 using AssessmentPaper.WebApi.Filters;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,15 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Adds serilog logger
+builder.Host.UseSerilog((ctx, lc) => 
+{
+    ctx.Configuration.GetSection("Logging");
+    lc.WriteTo.File("Logs/Log.txt");
+    lc.WriteTo.Console();
+    lc.WriteTo.Seq(ctx.Configuration.GetValue<string>("SeqHostAddress"));
+});
 
 builder.Services.AddClients();
 
